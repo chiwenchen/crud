@@ -59,7 +59,7 @@ func (userService) FetchUser(id string) (User, error) {
 }
 
 type fetchUserRequest struct {
-	ID string `json:"s"`
+	ID string `json:"id"`
 }
 type fetchUserResponse struct {
 	ID       string `json:"id"`
