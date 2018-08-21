@@ -7,6 +7,13 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// User is the reflection of User table
+type User struct {
+	ID       string `json:"id"`
+	Username string `json:"username"`
+	RegionId int    `json:"region_id"`
+}
+
 // InitDB to interact with Mysql
 func InitDB() (*gorm.DB, error) {
 	db, err := gorm.Open("mysql", "root@unix(/tmp/mysql.sock)/snapask_development")
