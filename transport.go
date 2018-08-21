@@ -29,6 +29,17 @@ func FetchUserEndpoint(svc UserService) endpoint.Endpoint {
 	}
 }
 
+func DeleteUserEndpoint(svc UserService) endpoint.Endpoint {
+	return func(_ context.Context, request interface{}) (interface{}, error) {
+		req := request.(fetchUserRequest)
+		v, err := svc.DeleteUser(req.ID)
+		if err != nil {
+			return fetchUserResponse{v.ID, v.Username, err.Error()}, nil
+		}
+		return fetchUserResponse{v.ID, v.Username, ""}, nil
+	}
+}
+
 // DecodeFetchUserRequest
 func DecodeFetchUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var req fetchUserRequest

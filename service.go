@@ -5,9 +5,9 @@ import "errors"
 // UserService is for user table interaction
 type UserService interface {
 	FetchUser(id string) (*User, error)
-	CreateUser(username string, rId int) (*User, error)
+	CreateUser(username string, regionId int) (*User, error)
 	UpdateUser(id string, username string) (*User, error)
-	// DeleteUser(id string) *User
+	DeleteUser(id string) (*User, error)
 }
 
 type userService struct{}
@@ -27,9 +27,9 @@ func (userService) FetchUser(id string) (*User, error) {
 		return &user, nil
 	}
 }
-func (userService) CreateUser(username string, rId int) (*User, error) {
+func (userService) CreateUser(username string, regionId int) (*User, error) {
 
-	user := User{Username: username, RegionId: rId}
+	user := User{Username: username, RegionId: regionId}
 
 	db, _ := InitDB()
 
@@ -51,5 +51,18 @@ func (userService) UpdateUser(id string, username string) (*User, error) {
 	db.Save(&user)
 
 	return &user, nil
+}
 
+func (userService) DeleteUser(id string) (*User, error) {
+	db, _ := InitDB()
+
+	var user User
+
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
+		return &User{}, err
+	}
+
+	db.Delete(&user)
+
+	return &user, nil
 }

@@ -38,8 +38,15 @@ func main() {
 		EncodeFetchUserResponse,
 	)
 
+	deleteUserHandler := httptransport.NewServer(
+		DeleteUserEndpoint(svc),
+		DecodeFetchUserRequest,
+		EncodeFetchUserResponse,
+	)
+
 	http.Handle("/find_user", fetchUserHandler)
 	http.Handle("/create_user", createUserHandler)
 	http.Handle("/update_user", updateUserHandler)
+	http.Handle("/delete_user", deleteUserHandler)
 	log.Fatal(http.ListenAndServe(":8090", nil))
 }
