@@ -11,7 +11,7 @@ import (
 type User struct {
 	ID       string `json:"id"`
 	Username string `json:"username"`
-	RegionId int    `json:"region_id"`
+	RegionID int    `json:"region_id"`
 }
 
 // InitDB to interact with Mysql

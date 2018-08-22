@@ -56,14 +56,14 @@ func EncodeFetchUserResponse(_ context.Context, w http.ResponseWriter, response 
 
 type createUserRequest struct {
 	Username string `json:"username"`
-	RegionId int    `json:"region_id"`
+	RegionID int    `json:"region_id"`
 }
 
 // CreateUserEndpoint
 func CreateUserEndpoint(svc UserService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(createUserRequest)
-		v, err := svc.CreateUser(req.Username, req.RegionId)
+		v, err := svc.CreateUser(req.Username, req.RegionID)
 		if err != nil {
 			return fetchUserResponse{v.ID, v.Username, err.Error()}, nil
 		}
@@ -71,6 +71,7 @@ func CreateUserEndpoint(svc UserService) endpoint.Endpoint {
 	}
 }
 
+// DecodeCreateUserRequest
 func DecodeCreateUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var req createUserRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -82,7 +83,7 @@ func DecodeCreateUserRequest(_ context.Context, r *http.Request) (interface{}, e
 type updateUserRequest struct {
 	ID       string `json:"id"`
 	Username string `json:"username"`
-	RegionId int    `json:"region_id"`
+	RegionID int    `json:"region_id"`
 }
 
 func UpdateUserEndpoint(svc UserService) endpoint.Endpoint {

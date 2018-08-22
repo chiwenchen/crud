@@ -23,13 +23,13 @@ func (userService) FetchUser(id string) (*User, error) {
 
 	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		return &User{}, err
-	} else {
-		return &user, nil
 	}
+
+	return &user, nil
 }
 func (userService) CreateUser(username string, regionID int) (*User, error) {
 
-	user := User{Username: username, RegionId: regionID}
+	user := User{Username: username, RegionID: regionID}
 
 	db, _ := InitDB()
 
