@@ -15,7 +15,7 @@ import (
 var errEmpty = errors.New("empty string")
 var logger = log.NewLogfmtLogger(os.Stderr)
 
-func loggingMiddleware(logger log.Logger) endpoint.Middleware {
+func outerloggingMiddleware(logger log.Logger) endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (interface{}, error) {
 			logger.Log("msg", "calling endpoint")
@@ -29,7 +29,7 @@ func main() {
 	svc := userService{}
 
 	fetchUser := endpoint.Chain(
-		loggingMiddleware(log.With(logger, "method", "fetch_user")),
+		outerloggingMiddleware(log.With(logger, "method", "fetch_user")),
 	)(FetchUserEndpoint(svc))
 
 	fetchUserHandler := httptransport.NewServer(
