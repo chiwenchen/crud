@@ -26,7 +26,10 @@ func outerloggingMiddleware(logger log.Logger) endpoint.Middleware {
 }
 
 func main() {
-	svc := userService{}
+
+	var svc UserService
+	svc = userService{}
+	svc = loggingMiddleware{logger, svc}
 
 	fetchUser := endpoint.Chain(
 		outerloggingMiddleware(log.With(logger, "method", "fetch_user")),
