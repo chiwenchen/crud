@@ -5,7 +5,7 @@ import "errors"
 // UserService is for user table interaction
 type UserService interface {
 	FetchUser(id string) (*User, error)
-	CreateUser(username string, regionId int) (*User, error)
+	CreateUser(username string, regionID int) (*User, error)
 	UpdateUser(id string, username string) (*User, error)
 	DeleteUser(id string) (*User, error)
 }
@@ -27,9 +27,9 @@ func (userService) FetchUser(id string) (*User, error) {
 		return &user, nil
 	}
 }
-func (userService) CreateUser(username string, regionId int) (*User, error) {
+func (userService) CreateUser(username string, regionID int) (*User, error) {
 
-	user := User{Username: username, RegionId: regionId}
+	user := User{Username: username, RegionId: regionID}
 
 	db, _ := InitDB()
 
